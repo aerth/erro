@@ -1,15 +1,13 @@
-package main
-
-import (
-	"io"
-)
+package erro
 
 const EOF = Error("EOF")
 
 type Error string
 
-func New(s string) Error {
-	return Error(s)
+func New(s string) *Error {
+	var e = new(Error)
+	*e = Error(s)
+	return e
 }
 
 // stringer interface
@@ -22,22 +20,7 @@ func (e Error) Error() string {
 	return string(e)
 }
 
-// IsEq compares an error with e
-func (e Error) IsEq(err error) bool {
+// IsEqual compares an error with e
+func (e Error) IsEqual(err error) bool {
 	return err.Error() == string(e)
-}
-
-func main() {
-	if EOF == io.EOF {
-		println("would be nice")
-	}
-	myeof := io.EOF
-	if myeof == io.EOF {
-		println("myeof := io.EOF")
-	}
-	if EOF.IsEq(io.EOF) {
-		println("EOF == io.EOF")
-
-	}
-	println("Hi")
 }
